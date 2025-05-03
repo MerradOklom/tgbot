@@ -23,5 +23,12 @@ ENTRYPOINT ["/bin/sh", "-c", "\
         echo \"CONFIG_TOML environment variable not set\"; \
         exit 1; \
     fi && \
+    echo \"Available npm scripts:\" && \
+    npm run || true && \
     echo \"Starting application in $(pwd)...\"; \
-    exec npm run start:dist"]
+    if npm run start:dist >/dev/null 2>&1; then \
+        exec npm run start:dist; \
+    else \
+        echo \"start:dist not found, falling back to node dist/index.js\"; \
+        exec node dist/index.js; \
+    fi"]
