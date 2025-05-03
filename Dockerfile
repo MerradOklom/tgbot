@@ -18,4 +18,4 @@ RUN sed -i 's/\r$//' /app/start.sh && \
     cat /app/start.sh
 
 # Set entrypoint
-ENTRYPOINT ["/app/start.sh"]
+CMD ["/usr/bash", "/app/start.sh"]
