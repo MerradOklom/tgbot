@@ -37,12 +37,6 @@ ENTRYPOINT ["/bin/sh", "-c", "\
         echo \"Running npm run start\"; \
         exec npm run start; \
     else \
-        echo \"npm start not found\"; \
-        if [ -f /app/dist/index.js ]; then \
-            echo \"Running node dist/index.js\"; \
-            exec node dist/index.js; \
-        else \
-            echo \"Error: dist/index.js not found and no start script available\"; \
-            exit 1; \
-        fi; \
+        echo \"npm start not found, running node /app/index.js\"; \
+        exec node /app/index.js; \
     fi"]
