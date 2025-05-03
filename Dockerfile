@@ -6,7 +6,10 @@ EXPOSE 8787
 # Install curl
 RUN apk add --no-cache curl
 
-# Set entrypoint to ensure /app directory, download configs, and run the application
+# Copy dummy HTTP server script
+COPY dummy-server.js /app/dummy-server.js
+
+# Set entrypoint to ensure /app directory, download configs, run dummy server, and run the application
 ENTRYPOINT ["/bin/sh", "-c", "\
     cd /app && \
     if [ -n \"$CONFIG_JSON\" ]; then \
@@ -23,5 +26,7 @@ ENTRYPOINT ["/bin/sh", "-c", "\
         echo \"CONFIG_TOML environment variable not set\"; \
         exit 1; \
     fi && \
-    echo \"Starting application in $(pwd)...\"; \
+    echo \"Starting dummy HTTP server on port 8787 in background...\"; \
+    node /app/dummy-server.js & \
+    echo \"Starting main application in $(pwd)...\"; \
     exec node /app/index.js"]
