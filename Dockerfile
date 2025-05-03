@@ -6,8 +6,9 @@ EXPOSE 8787
 # Install curl
 RUN apk add --no-cache curl
 
-# Set entrypoint to download configs and run the application
+# Set entrypoint to ensure /app directory, download configs, and run the application
 ENTRYPOINT ["/bin/sh", "-c", "\
+    cd /app && \
     if [ -n \"$CONFIG_JSON\" ]; then \
         echo \"Downloading config.json from $CONFIG_JSON\"; \
         curl -L -o /app/config.json \"$CONFIG_JSON\" || { echo \"Failed to download config.json\"; exit 1; }; \
@@ -22,5 +23,5 @@ ENTRYPOINT ["/bin/sh", "-c", "\
         echo \"CONFIG_TOML environment variable not set\"; \
         exit 1; \
     fi && \
-    echo \"Starting application...\"; \
+    echo \"Starting application in $(pwd)...\"; \
     exec npm run start:dist"]
