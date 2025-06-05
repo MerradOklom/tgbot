@@ -3,8 +3,9 @@ FROM adolphnov/chatgpt-telegram-workers:latest
 WORKDIR /app
 EXPOSE 8787
 
-# Install curl
-RUN apk add --no-cache curl
+# Install curl, python3, and uv
+RUN apk add --no-cache curl python3 && \
+    curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Copy dummy HTTP server script
 COPY dummy-server.js /app/dummy-server.js
