@@ -4,10 +4,10 @@ WORKDIR /app
 EXPOSE 8787
 
 # Install curl, python3, and uv
-RUN apk add --no-cache curl python3 && \
+RUN apk add --no-cache curl python3-pip && \
     curl -LsSf https://astral.sh/uv/install.sh | sh
     
-RUN python3 -m pip install mcp_weather_server
+RUN pip install mcp_weather_server
 
 # Copy dummy HTTP server script
 COPY dummy-server.js /app/dummy-server.js
