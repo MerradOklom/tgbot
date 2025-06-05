@@ -3,10 +3,14 @@ FROM adolphnov/chatgpt-telegram-workers:latest
 WORKDIR /app
 EXPOSE 8787
 
-# Install curl, python3, pip, and uv
-RUN apk add --no-cache curl python3 && \
-    python3 -m ensurepip && \
+# Install curl, python3, and pip
+RUN apk add --no-cache curl python3 py3-pip && \
+    python3 -m venv /app/venv && \
+    . /app/venv/bin/activate && \
     pip install --no-cache-dir uv mcp_weather_server
+
+# Set PATH to include virtual environment binaries
+ENV PATH="/app/venv/bin:$PATH"
 
 # Copy dummy HTTP server script
 COPY dummy-server.js /app/dummy-server.js
