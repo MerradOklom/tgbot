@@ -3,16 +3,15 @@ FROM adolphnov/chatgpt-telegram-workers:latest
 WORKDIR /app
 EXPOSE 8787
 
-# Install curl, python3, and uv
-RUN apk add --no-cache curl python3-pip && \
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    
-RUN pip install mcp_weather_server
+# Install curl, python3, pip, and uv
+RUN apk add --no-cache curl python3 && \
+    python3 -m ensurepip && \
+    pip install --no-cache-dir uv mcp_weather_server
 
 # Copy dummy HTTP server script
 COPY dummy-server.js /app/dummy-server.js
 
-# Set entrypoint to ensure /app directory, download configs, run dummy server, and run the application
+# Set entrypoint to manage configs, run dummy server, and start the application
 ENTRYPOINT ["/bin/sh", "-c", "\
     cd /app && \
     if [ -n \"$CONFIG_JSON\" ]; then \
