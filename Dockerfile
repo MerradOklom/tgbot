@@ -7,7 +7,7 @@ EXPOSE 8787
 RUN apk add --no-cache curl python3 py3-pip && \
     python3 -m venv /app/venv && \
     . /app/venv/bin/activate && \
-    pip install --no-cache-dir uv mcp_weather_server
+    pip install --no-cache-dir uv
 
 # Set PATH to include virtual environment binaries
 ENV PATH="/app/venv/bin:$PATH"
