@@ -1,4 +1,4 @@
-FROM adolphnov/chatgpt-telegram-workers:3d48b05
+FROM adolphnov/chatgpt-telegram-workers:latest
 
 WORKDIR /app
 EXPOSE 8787
